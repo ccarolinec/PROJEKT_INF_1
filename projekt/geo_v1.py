@@ -87,16 +87,16 @@ class Transformacje:
     
     def pl22000(self, phi, lam):
         
-        if lam >= 13.5 and lam < 16.5: #stopnie
+        if lam >= np.deg2rad(13.5) and lam < np.deg2rad(16.5): #stopnie
             lam0 = np.deg2rad(15)
             nr = 5
-        elif lam >=16.5 and lam < 19.5:
+        elif lam >=np.deg2rad(16.5) and lam < np.deg2rad(19.5):
             lam0 = np.deg2rad(18)
             nr = 6
-        elif lam >=19.5 and lam < 22.5:
+        elif lam >=np.deg2rad(19.5) and lam < np.deg2rad(22.5):
             lam0 = np.deg2rad(21)
             nr = 7
-        elif lam >=22.5 and lam < 25.5:
+        elif lam >=np.deg2rad(22.5) and lam < np.deg2rad(25.5):
             lam0 = np.deg2rad(24)
             nr = 8
         
@@ -121,7 +121,7 @@ class Transformacje:
         return(x2000, y2000)
     
     def pl21992(self, phi, lam):
-        
+        lam0 = np.deg2rad(19)
             
         b2=self.a**2*(1-self.ecc2)
         e_2=(self.a**2-b2)/b2
@@ -142,37 +142,6 @@ class Transformacje:
         y1992=y*m1992+500000
         
         return(x1992, y1992)
-
- 
-b2=self.a**2*(1-self.ecc2)
-e_2=(self.a**2-b2)/b2
-dl=lam-lam0
-t=tan(phi)
-n2=e_2*cos(phi)**2
-N=(self.a / np.sqrt(1 - self.ecc2 * np.sin(phi)**2))
-A0=1-self.ecc2/4-3*self.ecc2**2/64-5*self.ecc2**3/256
-A2=(3/8)*(self.ecc2+self.ecc2**2/4+15*self.ecc2**3/128)
-A4=15/256*(self.ecc2**2+3*self.ecc2**3/4)
-A6=35*self.ecc2**3/3072
-sigma=self.a*(A0*phi-A2*sin(2*phi)+A4*sin(4*phi)-A6*sin(6*phi))
-x=sigma+(dl**2/2)*N*sin(phi)*cos(phi)*(1+(dl**2/12)*(cos(phi))**2*(5-t**2+9*n2+4*n2**2)+(dl**4/360)*(cos(phi))**4*(61-58*t**2+t**4+270*n2-330*n2*t**2))
-y=dl*N*cos(phi)*(1+(dl**2/6)*(cos(phi))**2*(1-t**2+n2)+(dl**4/120)*(cos(phi))**4*(5-18*t**2+t**4+14*n2-58*n2*t**2))
-       
-        
-       b2=self.a**2*(1-self.ecc2)
-       e_2=(self.a**2-b2)/b2
-       dl=lam-lam0
-       t=tan(phi)
-       n2=e_2*cos(phi)**2
-       N=(self.a / np.sqrt(1 - self.ecc2 * np.sin(phi)**2))
-       A0=1-self.ecc2/4-3*self.ecc2**2/64-5*self.ecc2**3/256
-       A2=(3/8)*(self.ecc2+self.ecc2**2/4+15*self.ecc2**3/128)
-       A4=15/256*(self.ecc2**2+3*self.ecc2**3/4)
-       A6=35*self.ecc2**3/3072
-       sigma=self.a*(A0*phi-A2*sin(2*phi)+A4*sin(4*phi)-A6*sin(6*phi))
-       x=sigma+(dl**2/2)*N*sin(phi)*cos(phi)*(1+(dl**2/12)*(cos(phi))**2*(5-t**2+9*n2+4*n2**2)+(dl**4/360)*(cos(phi))**4*(61-58*t**2+t**4+270*n2-330*n2*t**2))
-       y=dl*N*cos(phi)*(1+(dl**2/6)*(cos(phi))**2*(1-t**2+n2)+(dl**4/120)*(cos(phi))**4*(5-18*t**2+t**4+14*n2-58*n2*t**2))     
-
 
 
 if __name__ == "__main__":
