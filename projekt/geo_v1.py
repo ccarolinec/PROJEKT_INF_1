@@ -1,4 +1,4 @@
-from math import sin, cos, sqrt, tan, atan, atan2, degrees, radians
+from math import sin, cos, sqrt, tan, atan, atan2, degrees, radians, pi
 import sys
 import numpy as np
 
@@ -84,6 +84,22 @@ class Transformacje:
         Y = (N + h) * cos(phi) * sin(lam)
         Z = (N * (1 - self.ecc2) + h) * sin(phi)
         return(X, Y, Z)
+    
+    def xyz2neu (self, X, Y, Z):
+        R = np.array([[-np.sin(phi)*np.cos(lam), -np.sin(lam), np.cos(phi)*np.cos(lam)], 
+                      [-np.sin(phi)*np.sin(lam), np.cos(lam), np.cos(phi)*np.sin(lam)], 
+                      [np.cos(phi), 0, np.sin(phi)]])
+        XYZ = X, Y, Z
+        X0 = 1
+        Y0 = 2
+        Z0 = 3 #robocze
+        W0 = X0, Y0, Z0
+        wektor_odl = XYZ - W0
+        dx = R.T @ wektor_odl
+        n = dx[0]
+        e = dx[1]
+        u = dx[-1]
+        return(n, e, u)
     
     def pl22000(self, phi, lam):
         
