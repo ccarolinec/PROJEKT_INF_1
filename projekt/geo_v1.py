@@ -114,13 +114,14 @@ class Transformacje:
         
         '''
 
-        XYZ = X, Y, Z
+        XYZ = np.array([X, Y, Z])
         
         X0 = 1
         Y0 = 2
         Z0 = 3 #robocze
-        W0 = X0, Y0, Z0
-        phi, lam, h = geo.xyz2plh(X0, Y0, Z0)
+        W0 = np.array([X0, Y0, Z0])
+        
+        phi, lam, h = self.xyz2plh(X0, Y0, Z0)
         
         R = np.array([[-np.sin(phi)*np.cos(lam), -np.sin(lam), np.cos(phi)*np.cos(lam)], 
                       [-np.sin(phi)*np.sin(lam), np.cos(lam), np.cos(phi)*np.sin(lam)], 
@@ -283,13 +284,13 @@ if __name__ == "__main__":
                 phi_str, lam_str, h_str = coord_line.split(',')
                 phi, lam, h = (float(phi_str,), float(lam_str), float(h_str))
                 x, y, z = geo.plh2xyz(phi, lam, h)
-                coords_plh.append([x, y, z])
+                coords_xyz.append([x, y, z])
             
             
         with open('result_plh2xyz.txt', 'w') as f:
             f.write('x[m], y[m], z[m]\n')
             
-            for coords_list in coords_plh:
+            for coords_list in coords_xyz:
                 line = ','.join([str(coord) for coord in coords_list])
                 f.writelines(line + '\n')
         
@@ -317,6 +318,7 @@ if __name__ == "__main__":
                 line = ','.join([str(coord) for coord in coords_list])
                 f.writelines(line + '\n')
                 
+    #nie działa robi tylko funkcje xyz2plh
     elif '--xyz2plh' in sys.argv and '--xyz2neu' in sys.argv:
         with open(input_file_path, 'r') as f:
             lines = f.readlines()
