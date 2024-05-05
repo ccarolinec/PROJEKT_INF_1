@@ -237,9 +237,10 @@ if __name__ == "__main__":
     # print(phi, lam, h)
     print(sys.argv)
     input_file_path = sys.argv[-1]
-    if '--xyz2plh' in sys.argv and '--phl2xyz' in sys.argv:
-        print('możesz podać tylko jedną falgę')
+    if '--xyz2plh' in sys.argv and '--phl2xyz' in sys.argv and '--xyz2neu' in sys.argv:
+        print('możesz podać tylko jedną flagę')
     elif '--xyz2plh' in sys.argv:
+        
             #1
         with open(input_file_path, 'r') as f:
             lines = f.readlines()
@@ -287,6 +288,32 @@ if __name__ == "__main__":
             for coords_list in coords_plh:
                 line = ','.join([str(coord) for coord in coords_list])
                 f.writelines(line + '\n')
+        
+          #1
+      with open(input_file_path, 'r') as f:
+          lines = f.readlines()
+          coords_lines = lines[4:]
+          #print(coords_lines)
+          
+          coords_neu = []
+          
+          for coord_line in coords_lines:
+              coord_line = coord_line.strip('\n')
+              x_str, y_str, z_str = coord_line.split(',')
+              x, y, z = (float(x_str), float(y_str), float(z_str))
+              n, e, u = geo.xyz2neu(x, y, z)
+              coords_neu.append([n, e, u])
+          
+          
+      with open('wsp_inp/result_xyz2neu.txt', 'w') as f:
+          f.write('n, e, u\n')
+          
+          for coords_list in coords_neu:
+              line = ','.join([str(coord) for coord in coords_list])
+              f.writelines(line + '\n')
+      
+
+  
         
 
         
