@@ -78,8 +78,9 @@ class Transformacje:
             
     def plh2xyz(self, phi, lam, h):
         '''
-
-       Parameters
+        Algorytm odrotny do algorytmu Hirvonena. 
+        Przelicza współrzędne geodezyje długość, szerokość oraz wysokość elipsoidalną (phi, lam, h)
+        na współrzędne w układzie orto-kartezjańskim (X, Y, Z)
        ----------
        phi, lam, h : FLOAT ??
     
@@ -99,19 +100,17 @@ class Transformacje:
     
     def xyz2neu (self, X, Y, Z):
         '''
-
-        Parameters
+        Przeliczenie wpółrzędnych w układzie orto-kartezjańskim
+        Na wpsółrzędne w układzie topocentrycznym w postaci wektora NEU
         ----------
         X, Y, Z : FLOAT
              współrzędne w układzie orto-kartezjańskim, 
         
         Returns
         -------
-        Elementy wektora NEU:
-        
-        N FLOAT
-        E FLOAT
-        U FLOAT
+        N, E, U :  FLOAT
+            współrzedne w układzie topocentrycznym
+    
         
         '''
         
@@ -134,9 +133,8 @@ class Transformacje:
     def pl22000(self, phi, lam):
         
         '''
-        
-
-        Parameters
+        Funkcja pozwalajaca na przeliczenie długości i szerokosci geodezyjnej (phi, lam) na 
+        współrzedne w układzie PL-2000(X, Y)
         ----------
         phi : FLOAT ??
             
@@ -146,7 +144,7 @@ class Transformacje:
         Returns
         -------
         X, Y : FLOAT
-        Współrzędne w układzie PL 1992
+            Współrzędne w układzie PL-2000
 
         '''
         
@@ -169,12 +167,15 @@ class Transformacje:
         dl=lam-lam0
         t=tan(phi)
         n2=e_2*cos(phi)**2
+        
         N=(self.a / np.sqrt(1 - self.ecc2 * np.sin(phi)**2))
+        
         A0=1-self.ecc2/4-3*self.ecc2**2/64-5*self.ecc2**3/256
         A2=(3/8)*(self.ecc2+self.ecc2**2/4+15*self.ecc2**3/128)
         A4=15/256*(self.ecc2**2+3*self.ecc2**3/4)
         A6=35*self.ecc2**3/3072
         sigma=self.a*(A0*phi-A2*sin(2*phi)+A4*sin(4*phi)-A6*sin(6*phi))
+        
         x=sigma+(dl**2/2)*N*sin(phi)*cos(phi)*(1+(dl**2/12)*(cos(phi))**2*(5-t**2+9*n2+4*n2**2)+(dl**4/360)*(cos(phi))**4*(61-58*t**2+t**4+270*n2-330*n2*t**2))
         y=dl*N*cos(phi)*(1+(dl**2/6)*(cos(phi))**2*(1-t**2+n2)+(dl**4/120)*(cos(phi))**4*(5-18*t**2+t**4+14*n2-58*n2*t**2))
     
@@ -186,7 +187,9 @@ class Transformacje:
     def pl21992(self, phi, lam):
         '''
        
-       Parameters
+       Funkcja pozwalajaca na przeliczenie długości i szerokosci geodezyjnej (phi, lam) na 
+       współrzedne w układzie PL-1992 (X, Y)
+       
        ----------
        phi : FLOAT ??
            
@@ -196,7 +199,7 @@ class Transformacje:
        Returns
        -------
        X, Y : FLOAT
-       Współrzędne w układzie PL 2000
+           Współrzędne w układzie PL-1992
 
        '''
 
@@ -234,7 +237,7 @@ if __name__ == "__main__":
     # print(phi, lam, h)
     print(sys.argv)
     input_file_path = sys.argv[-1]
-    if '--xyz2plh' in sys.argv and '--phl2xyz' in sys.argv and '--xyz2neu' in sys.argv:
+    if '--xyz2plh' in sys.argv and '--phl2xyz' in sys.argv:
         print('możesz podać tylko jedną flagę')
     elif '--xyz2plh' in sys.argv:
         
@@ -254,7 +257,7 @@ if __name__ == "__main__":
                 coords_plh.append([phi, lam, h])
             
             
-        with open('wsp_inp/result_xyz2plh.txt', 'w') as f:
+        with open('result_xyz2plh.txt', 'w') as f:
             f.write('phi[deg], lam[deg], h[m]\n')
             
             for coords_list in coords_plh:
@@ -279,7 +282,7 @@ if __name__ == "__main__":
                 coords_plh.append([x, y, z])
             
             
-        with open('wsp_inp/result_plh2xyz.txt', 'w') as f:
+        with open('result_plh2xyz.txt', 'w') as f:
             f.write('x[m], y[m], z[m]\n')
             
             for coords_list in coords_plh:
@@ -303,7 +306,52 @@ if __name__ == "__main__":
                 coords_neu.append([n, e, u])
           
           
-        with open('wsp_inp/result_xyz2neu.txt', 'w') as f:
+        with open('result_xyz2neu.txt', 'w') as f:
+            f.write('n [m], e [m], u [m]\n')
+          
+            for coords_list in coords_neu:
+                line = ','.join([str(coord) for coord in coords_list])
+                f.writelines(line + '\n')
+                
+    elif '--xyz2plh' in sys.argv and '--xyz2neu' in sys.argv:
+        with open(input_file_path, 'r') as f:
+            lines = f.readlines()
+            coords_lines = lines[4:]
+            #print(coords_lines)
+            
+            coords_plh = []
+            
+            for coord_line in coords_lines:
+                coord_line = coord_line.strip('\n')
+                x_str, y_str, z_str = coord_line.split(',')
+                x, y, z = (float(x_str), float(y_str), float(z_str))
+                phi, lam, h = geo.xyz2plh(x, y, z)
+                coords_plh.append([phi, lam, h])
+            
+            
+        with open('result_xyz2plh.txt', 'w') as f:
+            f.write('phi[deg], lam[deg], h[m]\n')
+            
+            for coords_list in coords_plh:
+                line = ','.join([str(coord) for coord in coords_list])
+                f.writelines(line + '\n')
+                
+        with open(input_file_path, 'r') as f:
+            lines = f.readlines()
+            coords_lines = lines[4:]
+            #print(coords_lines)
+          
+            coords_neu = []
+          
+            for coord_line in coords_lines:
+                coord_line = coord_line.strip('\n')
+                x_str, y_str, z_str = coord_line.split(',')
+                x, y, z = (float(x_str), float(y_str), float(z_str))
+                n, e, u = geo.xyz2neu(x, y, z)
+                coords_neu.append([n, e, u])
+          
+          
+        with open('result_xyz2neu.txt', 'w') as f:
             f.write('n [m], e [m], u [m]\n')
           
             for coords_list in coords_neu:
