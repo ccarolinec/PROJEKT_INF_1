@@ -77,6 +77,21 @@ class Transformacje:
             
             
     def plh2xyz(self, phi, lam, h):
+        '''
+
+       Parameters
+       ----------
+       phi, lam, h : FLOAT ??
+    
+       Returns
+       -------
+       X FLOAT
+       Y FLOAT
+       Z FLOAT
+       
+       Współrzędne w układzie orto kartezjańskim
+    
+       '''
         phi = radians(phi)
         lam = radians(lam)
         N = self.a/(1 - self.ecc2 * (sin(phi))**2)**(1/2)
@@ -86,6 +101,23 @@ class Transformacje:
         return(X, Y, Z)
     
     def xyz2neu (self, X, Y, Z):
+        '''
+
+        Parameters
+        ----------
+        X, Y, Z : FLOAT
+             współrzędne w układzie orto-kartezjańskim, 
+        
+        Returns
+        -------
+        Elementy wektora NEU:
+        
+        N FLOAT
+        E FLOAT
+        U FLOAT
+        
+        '''
+        
         phi, lam , h = xyz2plh(x, y, z)
         R = np.array([[-np.sin(phi)*np.cos(lam), -np.sin(lam), np.cos(phi)*np.cos(lam)], 
                       [-np.sin(phi)*np.sin(lam), np.cos(lam), np.cos(phi)*np.sin(lam)], 
@@ -103,6 +135,23 @@ class Transformacje:
         return(n, e, u)
     
     def pl22000(self, phi, lam):
+        
+        '''
+        
+
+        Parameters
+        ----------
+        phi : FLOAT ??
+            
+        lam : FLOAT ??
+            
+
+        Returns
+        -------
+        X, Y : FLOAT
+        Współrzędne w układzie PL 1992
+
+        '''
         
         if lam >= np.deg2rad(13.5) and lam < np.deg2rad(16.5): #stopnie
             lam0 = np.deg2rad(15)
@@ -138,6 +187,22 @@ class Transformacje:
         return(x2000, y2000)
     
     def pl21992(self, phi, lam):
+        '''
+       
+       Parameters
+       ----------
+       phi : FLOAT ??
+           
+       lam : FLOAT ??
+           
+
+       Returns
+       -------
+       X, Y : FLOAT
+       Współrzędne w układzie PL 2000
+
+       '''
+
         lam0 = np.deg2rad(19)
             
         b2=self.a**2*(1-self.ecc2)
