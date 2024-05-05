@@ -85,11 +85,8 @@ class Transformacje:
     
        Returns
        -------
-       X FLOAT
-       Y FLOAT
-       Z FLOAT
-       
-       Współrzędne w układzie orto kartezjańskim
+       X, Y, Z : FLOAT
+           współrzędne w układzie orto-kartezjańskim,
     
        '''
         phi = radians(phi)
@@ -118,7 +115,7 @@ class Transformacje:
         
         '''
         
-        phi, lam , h = xyz2plh(x, y, z)
+        #phi, lam , h = xyz2plh(x, y, z)
         R = np.array([[-np.sin(phi)*np.cos(lam), -np.sin(lam), np.cos(phi)*np.cos(lam)], 
                       [-np.sin(phi)*np.sin(lam), np.cos(lam), np.cos(phi)*np.sin(lam)], 
                       [np.cos(phi), 0, np.sin(phi)]])
@@ -289,28 +286,29 @@ if __name__ == "__main__":
                 line = ','.join([str(coord) for coord in coords_list])
                 f.writelines(line + '\n')
         
+    elif '--xyz2neu' in sys.argv:
           #1
-      with open(input_file_path, 'r') as f:
-          lines = f.readlines()
-          coords_lines = lines[4:]
-          #print(coords_lines)
+        with open(input_file_path, 'r') as f:
+            lines = f.readlines()
+            coords_lines = lines[4:]
+            #print(coords_lines)
           
-          coords_neu = []
+            coords_neu = []
           
-          for coord_line in coords_lines:
-              coord_line = coord_line.strip('\n')
-              x_str, y_str, z_str = coord_line.split(',')
-              x, y, z = (float(x_str), float(y_str), float(z_str))
-              n, e, u = geo.xyz2neu(x, y, z)
-              coords_neu.append([n, e, u])
+            for coord_line in coords_lines:
+                coord_line = coord_line.strip('\n')
+                x_str, y_str, z_str = coord_line.split(',')
+                x, y, z = (float(x_str), float(y_str), float(z_str))
+                n, e, u = geo.xyz2neu(x, y, z)
+                coords_neu.append([n, e, u])
           
           
-      with open('wsp_inp/result_xyz2neu.txt', 'w') as f:
-          f.write('n, e, u\n')
+        with open('wsp_inp/result_xyz2neu.txt', 'w') as f:
+            f.write('n [m], e [m], u [m]\n')
           
-          for coords_list in coords_neu:
-              line = ','.join([str(coord) for coord in coords_list])
-              f.writelines(line + '\n')
+            for coords_list in coords_neu:
+                line = ','.join([str(coord) for coord in coords_list])
+                f.writelines(line + '\n')
       
 
   
