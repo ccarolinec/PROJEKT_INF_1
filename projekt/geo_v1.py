@@ -86,6 +86,7 @@ class Transformacje:
         return(X, Y, Z)
     
     def xyz2neu (self, X, Y, Z):
+        phi, lam , h = xyz2plh(x, y, z)
         R = np.array([[-np.sin(phi)*np.cos(lam), -np.sin(lam), np.cos(phi)*np.cos(lam)], 
                       [-np.sin(phi)*np.sin(lam), np.cos(lam), np.cos(phi)*np.sin(lam)], 
                       [np.cos(phi), 0, np.sin(phi)]])
@@ -173,7 +174,7 @@ if __name__ == "__main__":
     input_file_path = sys.argv[-1]
     if '--xyz2plh' in sys.argv and '--phl2xyz' in sys.argv:
         print('możesz podać tylko jedną falgę')
-    elif '--phl2xyz' in sys.argv:
+    elif '--xyz2plh' in sys.argv:
             #1
         with open(input_file_path, 'r') as f:
             lines = f.readlines()
@@ -197,7 +198,7 @@ if __name__ == "__main__":
                 line = ','.join([str(coord) for coord in coords_list])
                 f.writelines(line + '\n')
         
-    elif '--xyz2plh' in sys.argv:
+    elif '--plh2xyz' in sys.argv:
         
     #2
         with open(input_file_path, 'r') as f:
