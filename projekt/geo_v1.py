@@ -113,17 +113,21 @@ class Transformacje:
     
         
         '''
-        
-        #phi, lam , h = xyz2plh(x, y, z)
-        R = np.array([[-np.sin(phi)*np.cos(lam), -np.sin(lam), np.cos(phi)*np.cos(lam)], 
-                      [-np.sin(phi)*np.sin(lam), np.cos(lam), np.cos(phi)*np.sin(lam)], 
-                      [np.cos(phi), 0, np.sin(phi)]])
+
         XYZ = X, Y, Z
+        
         X0 = 1
         Y0 = 2
         Z0 = 3 #robocze
         W0 = X0, Y0, Z0
+        phi, lam, h = geo.xyz2plh(X0, Y0, Z0)
+        
+        R = np.array([[-np.sin(phi)*np.cos(lam), -np.sin(lam), np.cos(phi)*np.cos(lam)], 
+                      [-np.sin(phi)*np.sin(lam), np.cos(lam), np.cos(phi)*np.sin(lam)], 
+                      [np.cos(phi), 0, np.sin(phi)]])
+        
         wektor_odl = XYZ - W0
+        
         dx = R.T @ wektor_odl
         n = dx[0]
         e = dx[1]
