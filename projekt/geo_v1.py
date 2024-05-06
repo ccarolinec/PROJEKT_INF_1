@@ -248,7 +248,8 @@ if __name__ == "__main__":
     # print(phi, lam, h)
     print(sys.argv)
     input_file_path = sys.argv[-1]
-    
+    if '--header-lines':
+        number_of_header_lines = int(sys.argv[2])
     if '--xyz2plh' in sys.argv and '--phl2xyz' in sys.argv:
         print('możesz podać tylko jedną flagę')
     elif '--xyz2plh' in sys.argv:
@@ -256,7 +257,7 @@ if __name__ == "__main__":
             #1
         with open(input_file_path, 'r') as f:
             lines = f.readlines()
-            coords_lines = lines[4:]
+            coords_lines = lines[number_of_header_lines:]
             #print(coords_lines)
             
             coords_plh = []
@@ -281,7 +282,7 @@ if __name__ == "__main__":
     #2
         with open(input_file_path, 'r') as f:
             lines = f.readlines()
-            coords_lines = lines[1:]
+            coords_lines = lines[number_of_header_lines:]
             #print(coords_lines)
             
             coords_xyz = []
@@ -307,7 +308,7 @@ if __name__ == "__main__":
           #3
         with open(input_file_path, 'r') as f:
             lines = f.readlines()
-            coords_lines = lines[4:]
+            coords_lines = lines[number_of_header_lines:]
             #print(coords_lines)
           
             coords_neu = []
@@ -317,7 +318,7 @@ if __name__ == "__main__":
                 x_str, y_str, z_str = coord_line.split(',')
                 x, y, z = (float(x_str), float(y_str), float(z_str))
         	   
-                x0, y0, z0 = sys.argv[-4:-1]
+                x0, y0, z0 = sys.argv[number_of_header_lines:-1]
                 x0, y0, z0 = (float(x0), float(y0), float(z0))
 
                 n, e, u = geo.xyz2neu(x, y, z, x0, y0, z0)
