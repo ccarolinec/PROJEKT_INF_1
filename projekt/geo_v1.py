@@ -140,7 +140,7 @@ class Transformacje:
         u = dx[-1]
         return(n, e, u)
     
-    def pl22000(self, phi, lam):
+    def pl22000(self, phi_, lam_):
         
         '''
         Funkcja pozwalajaca na przeliczenie długości i szerokosci geodezyjnej (phi, lam) na 
@@ -158,6 +158,8 @@ class Transformacje:
             Współrzędne w układzie PL-2000
 
         '''
+        phi = radians(phi_)
+        lam = radians(lam_)
         
         if lam >= np.deg2rad(13.5) and lam < np.deg2rad(16.5): #stopnie
             lam0 = np.deg2rad(15)
@@ -336,8 +338,8 @@ class Transformacje:
 #                 f.writelines(line + '\n')
 if __name__ == "__main__":
     # utworzenie obiektu
-    geo = Transformacje()
-    model = input('podaj nazwę modelu: "wgs84"/ "grs80":')
+    geo = Transformacje(model = "wgs84")
+    # model = input('podaj nazwę modelu: "wgs84"/ "grs80":')
     
     # dane XYZ geocentryczne
     # X = 3664940.500; Y = 1409153.590; Z = 5009571.170
@@ -453,7 +455,7 @@ if __name__ == "__main__":
            
             for coords_list in coords_xy1992:
                 x1992, y1992 = coords_list
-                line = f'{x1992:11.3f}, {y1992:11.3f}'
+                line = f'{x1992:.3f}, {y1992:.3f}'
                 # line = ','.join([str(coord) for coord in coords_list])
                 f.writelines(line + '\n') 
 
@@ -478,7 +480,7 @@ if __name__ == "__main__":
            
             for coords_list in coords_xy1992:
                 x2000, y2000 = coords_list
-                line = f'{x2000:11.3f}, {y2000:11.3f}'
+                line = f'{x2000:.3f}, {y2000:.3f}'
                 # line = ','.join([str(coord) for coord in coords_list])
                 f.writelines(line + '\n')
                 
