@@ -98,13 +98,16 @@ class Transformacje:
         Z = (N * (1 - self.ecc2) + h) * sin(phi)
         return(X, Y, Z)
     
-    def xyz2neu (self, X, Y, Z):
+    def xyz2neu (self, X, Y, Z, X0, Y0, Z0):
         '''
         Przeliczenie wpółrzędnych w układzie orto-kartezjańskim
         Na wpsółrzędne w układzie topocentrycznym w postaci wektora NEU
         ----------
         X, Y, Z : FLOAT
              współrzędne w układzie orto-kartezjańskim, 
+        
+        X0, Y0, Z0 : FLOAT
+            współrzędne geocentryczne anteny 
         
         Returns
         -------
@@ -113,6 +116,7 @@ class Transformacje:
     
         
         '''
+    
 
         XYZ = np.array([X, Y, Z])
         
@@ -121,11 +125,14 @@ class Transformacje:
         Z0 = 3 #robocze
         W0 = np.array([X0, Y0, Z0])
         
-        phi, lam, h = self.xyz2plh(X0, Y0, Z0)
+        phi, lam, _ = [radians(coord) for coord in self.xyz2plh(X0, Y0, Z0)]
         
+        
+        #z funkcji z gw
         R = np.array([[-np.sin(phi)*np.cos(lam), -np.sin(lam), np.cos(phi)*np.cos(lam)], 
                       [-np.sin(phi)*np.sin(lam), np.cos(lam), np.cos(phi)*np.sin(lam)], 
                       [np.cos(phi), 0, np.sin(phi)]])
+        
         
         wektor_odl = XYZ - W0
         
@@ -142,9 +149,10 @@ class Transformacje:
         współrzedne w układzie PL-2000(X, Y)
         ----------
         phi : FLOAT ??
+            współrzędne krzywoliniowe
             
         lam : FLOAT ??
-            
+            współrzędne krzywoliniowe
 
         Returns
         -------
@@ -295,7 +303,7 @@ if __name__ == "__main__":
                 f.writelines(line + '\n')
         
     elif '--xyz2neu' in sys.argv:
-          #1
+          #3
         with open(input_file_path, 'r') as f:
             lines = f.readlines()
             coords_lines = lines[4:]
@@ -307,9 +315,15 @@ if __name__ == "__main__":
                 coord_line = coord_line.strip('\n')
                 x_str, y_str, z_str = coord_line.split(',')
                 x, y, z = (float(x_str), float(y_str), float(z_str))
-                n, e, u = geo.xyz2neu(x, y, z)
+        	   
+                x0, y0, z0 = sys.argv[-4:-1]
+                x0, y0, z0 = (float(x0), float(y0), float(z0))
+
+                n, e, u = geo.xyz2neu(x, y, z, x0, y0, z0)
                 coords_neu.append([n, e, u])
-          
+                
+                
+
           
         with open('result_xyz2neu.txt', 'w') as f:
             f.write('n [m], e [m], u [m]\n')
@@ -318,7 +332,6 @@ if __name__ == "__main__":
                 line = ','.join([str(coord) for coord in coords_list])
                 f.writelines(line + '\n')
                 
-    #nie działa robi tylko funkcje xyz2plh
     elif '--xyz2plh' in sys.argv and '--xyz2neu' in sys.argv:
         with open(input_file_path, 'r') as f:
             lines = f.readlines()
@@ -326,6 +339,7 @@ if __name__ == "__main__":
             #print(coords_lines)
             
             coords_plh = []
+            coords_neu = []
             
             for coord_line in coords_lines:
                 coord_line = coord_line.strip('\n')
@@ -333,7 +347,8 @@ if __name__ == "__main__":
                 x, y, z = (float(x_str), float(y_str), float(z_str))
                 phi, lam, h = geo.xyz2plh(x, y, z)
                 coords_plh.append([phi, lam, h])
-            
+                n, e, u = geo.xyz2neu(x, y, z, x0, y0, z0)
+                coords_neu.append([n, e, u])          
             
         with open('result_xyz2plh.txt', 'w') as f:
             f.write('phi[deg], lam[deg], h[m]\n')
@@ -342,28 +357,16 @@ if __name__ == "__main__":
                 line = ','.join([str(coord) for coord in coords_list])
                 f.writelines(line + '\n')
                 
-        with open(input_file_path, 'r') as f:
-            lines = f.readlines()
-            coords_lines = lines[4:]
-            #print(coords_lines)
-          
-            coords_neu = []
-          
-            for coord_line in coords_lines:
-                coord_line = coord_line.strip('\n')
-                x_str, y_str, z_str = coord_line.split(',')
-                x, y, z = (float(x_str), float(y_str), float(z_str))
-                n, e, u = geo.xyz2neu(x, y, z)
-                coords_neu.append([n, e, u])
-          
-          
         with open('result_xyz2neu.txt', 'w') as f:
             f.write('n [m], e [m], u [m]\n')
           
             for coords_list in coords_neu:
                 line = ','.join([str(coord) for coord in coords_list])
                 f.writelines(line + '\n')
-      
+
+
+
+
 
   
         
