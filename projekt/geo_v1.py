@@ -249,7 +249,7 @@ if __name__ == "__main__":
     print(sys.argv)
     input_file_path = sys.argv[-1]
     if '--header-lines':
-        number_of_header_lines = int(sys.argv[2])
+        number_of_header_lines = int(sys.argv[3])
     if '--xyz2plh' in sys.argv and '--phl2xyz' in sys.argv:
         print('możesz podać tylko jedną flagę')
     elif '--xyz2plh' in sys.argv:
@@ -323,10 +323,7 @@ if __name__ == "__main__":
 
                 n, e, u = geo.xyz2neu(x, y, z, x0, y0, z0)
                 coords_neu.append([n, e, u])
-                
-                
 
-          
         with open('result_xyz2neu.txt', 'w') as f:
             f.write('n [m], e [m], u [m]\n')
           
@@ -336,37 +333,37 @@ if __name__ == "__main__":
                # line = ','.join([str(coord) for coord in coords_list])
                 f.writelines(line + '\n')
                 
-    # elif '--xyz2plh' in sys.argv and '--xyz2neu' in sys.argv:
-    #     with open(input_file_path, 'r') as f:
-    #         lines = f.readlines()
-    #         coords_lines = lines[4:]
-    #         #print(coords_lines)
+    elif '--xyz2plh' in sys.argv[2] and '--xyz2neu' in sys.argv[3]:
+        with open(input_file_path, 'r') as f:
+            lines = f.readlines()
+            coords_lines = lines[4:]
+            #print(coords_lines)
             
-    #         coords_plh = []
-    #         coords_neu = []
+            coords_plh = []
+            coords_neu = []
             
-    #         for coord_line in coords_lines:
-    #             coord_line = coord_line.strip('\n')
-    #             x_str, y_str, z_str = coord_line.split(',')
-    #             x, y, z = (float(x_str), float(y_str), float(z_str))
-    #             phi, lam, h = geo.xyz2plh(x, y, z)
-    #             coords_plh.append([phi, lam, h])
-    #             n, e, u = geo.xyz2neu(x, y, z, x0, y0, z0)
-    #             coords_neu.append([n, e, u])          
+            for coord_line in coords_lines:
+                coord_line = coord_line.strip('\n')
+                x_str, y_str, z_str = coord_line.split(',')
+                x, y, z = (float(x_str), float(y_str), float(z_str))
+                phi, lam, h = geo.xyz2plh(x, y, z)
+                coords_plh.append([phi, lam, h])
+                n, e, u = geo.xyz2neu(x, y, z, x0, y0, z0)
+                coords_neu.append([n, e, u])          
             
-    #     with open('result_xyz2plh.txt', 'w') as f:
-    #         f.write('phi[deg], lam[deg], h[m]\n')
+        with open('result_xyz2plh.txt', 'w') as f:
+            f.write('phi[deg], lam[deg], h[m]\n')
             
-    #         for coords_list in coords_plh:
-    #             line = ','.join([str(coord) for coord in coords_list])
-    #             f.writelines(line + '\n')
+            for coords_list in coords_plh:
+                line = ','.join([str(coord) for coord in coords_list])
+                f.writelines(line + '\n')
                 
-    #     with open('result_xyz2neu.txt', 'w') as f:
-    #         f.write('n [m], e [m], u [m]\n')
+        with open('result_xyz2neu.txt', 'w') as f:
+            f.write('n [m], e [m], u [m]\n')
           
-    #         for coords_list in coords_neu:
-    #             line = ','.join([str(coord) for coord in coords_list])
-    #             f.writelines(line + '\n')
+            for coords_list in coords_neu:
+                line = ','.join([str(coord) for coord in coords_list])
+                f.writelines(line + '\n')
 
 
 
