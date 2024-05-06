@@ -257,109 +257,22 @@ class Transformacje:
 #     input_file_path = sys.argv[-1]
 #     if '--header-lines':
 #         number_of_header_lines = sys.argv[2]
-#     if '--xyz2plh' in sys.argv and '--phl2xyz' in sys.argv:
-#         print('możesz podać tylko jedną flagę')
-#     elif '--xyz2plh' in sys.argv:
-        
-#             #1
-#         with open(input_file_path, 'r') as f:
-#             lines = f.readlines()
-#             coords_lines = lines[int(number_of_header_lines):]
-#             #print(coords_lines)
-            
-#             coords_plh = []
-            
-#             for coord_line in coords_lines:
-#                 coord_line = coord_line.strip('\n')
-#                 x_str, y_str, z_str = coord_line.split(',')
-#                 x, y, z = (float(x_str), float(y_str), float(z_str))
-#                 phi, lam, h = geo.xyz2plh(x, y, z)
-#                 coords_plh.append([phi, lam, h])
-            
-            
-#         with open('result_xyz2plh.txt', 'w') as f:
-#             f.write('phi[deg], lam[deg], h[m]\n')
-            
-#             for coords_list in coords_plh:
-#                 line = ','.join([str(coord) for coord in coords_list])
-#                 f.writelines(line + '\n')
-        
-#     elif '--plh2xyz' in sys.argv:
-        
-#     #2
-#         with open(input_file_path, 'r') as f:
-#             lines = f.readlines()
-#             coords_lines = lines[number_of_header_lines:]
-#             #print(coords_lines)
-            
-#             coords_xyz = []
-            
-#             for coord_line in coords_lines:
-#                 coord_line = coord_line.strip('\n')
-#                 phi_str, lam_str, h_str = coord_line.split(',')
-#                 phi, lam, h = (float(phi_str,), float(lam_str), float(h_str))
-#                 x, y, z = geo.plh2xyz(phi, lam, h)
-#                 coords_xyz.append([x, y, z])
-            
-            
-#         with open('result_plh2xyz.txt', 'w') as f:
-#             f.write('x[m], y[m], z[m]\n')
-            
-#             for coords_list in coords_xyz:
-#               #  line = ','.join([str(coord) for coord in coords_list])
-#                 x, y, z = coords_list
-#                 line = f'{x:11.3f}, {y:11.3f}, {z:11.3f}'
-#                 f.writelines(line + '\n')
-        
-#     elif '--xyz2neu' in sys.argv:
-#           #3
-#         with open(input_file_path, 'r') as f:
-#             lines = f.readlines()
-#             coords_lines = lines[number_of_header_lines:]
-#             #print(coords_lines)
-          
-#             coords_neu = []
-          
-#             for coord_line in coords_lines:
-#                 coord_line = coord_line.strip('\n')
-#                 x_str, y_str, z_str = coord_line.split(',')
-#                 x, y, z = (float(x_str), float(y_str), float(z_str))
-        	   
-#                 x0, y0, z0 = sys.argv[number_of_header_lines:-1]
-#                 x0, y0, z0 = (float(x0), float(y0), float(z0))
 
-#                 n, e, u = geo.xyz2neu(x, y, z, x0, y0, z0)
-#                 coords_neu.append([n, e, u])
-
-#         with open('result_xyz2neu.txt', 'w') as f:
-#             f.write('n [m], e [m], u [m]\n')
-          
-#             for coords_list in coords_neu:
-#                 n, e, u = coords_list
-#                 line = f'{n:11.3f}, {e:11.3f}, {u:11.3f}'
-#                # line = ','.join([str(coord) for coord in coords_list])
-#                 f.writelines(line + '\n')
 if __name__ == "__main__":
     # utworzenie obiektu
-    geo = Transformacje(model = "wgs84")
-    
-   # geo = Transformacje()
 #   model = input('podaj nazwę modelu: "wgs84"/ "grs80":')
 
-
-    
-    # dane XYZ geocentryczne
-    # X = 3664940.500; Y = 1409153.590; Z = 5009571.170
-    # phi, lam, h = geo.xyz2plh(X, Y, Z)
-    # print(phi, lam, h)
-    # phi, lam, h = geo.xyz2plh2(X, Y, Z)
-    # print(phi, lam, h)
     print(sys.argv)
     input_file_path = sys.argv[-1]
+    
+    model = sys.argv[-2]
+    geo = Transformacje(model)
+    
     # if '--header-lines':
     #     number_of_header_lines = sys.argv[2]
     if '--xyz2plh' in sys.argv and '--phl2xyz' in sys.argv:
         print('możesz podać tylko jedną flagę')
+        
     elif '--xyz2plh' in sys.argv:
         
             #1
@@ -426,7 +339,7 @@ if __name__ == "__main__":
                 x_str, y_str, z_str = coord_line.split(',')
                 x, y, z = (float(x_str), float(y_str), float(z_str))
         	   
-                x0, y0, z0 = sys.argv[-4:-1]
+                x0, y0, z0 = sys.argv[-5:-2]
                 x0, y0, z0 = (float(x0), float(y0), float(z0))
 
                 n, e, u = geo.xyz2neu(x, y, z, x0, y0, z0)
