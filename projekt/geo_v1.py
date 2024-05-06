@@ -197,7 +197,7 @@ class Transformacje:
         
         return(x2000, y2000)
     
-    def pl21992(self, phi, lam):
+    def pl21992(self, phi_, lam_):
         '''
        
        Funkcja pozwalajaca na przeliczenie długości i szerokosci geodezyjnej (phi, lam) na 
@@ -215,6 +215,9 @@ class Transformacje:
            Współrzędne w układzie PL-1992
 
        '''
+        phi = radians(phi_)
+        lam = radians(lam_)
+       
 
         lam0 = np.deg2rad(19)
             
@@ -339,7 +342,11 @@ class Transformacje:
 if __name__ == "__main__":
     # utworzenie obiektu
     geo = Transformacje(model = "wgs84")
-    # model = input('podaj nazwę modelu: "wgs84"/ "grs80":')
+    
+   # geo = Transformacje()
+#   model = input('podaj nazwę modelu: "wgs84"/ "grs80":')
+
+
     
     # dane XYZ geocentryczne
     # X = 3664940.500; Y = 1409153.590; Z = 5009571.170
@@ -478,7 +485,7 @@ if __name__ == "__main__":
         with open('result_pl22000.txt', 'w') as f:
             f.write('x2000 [m], y2000 [m]\n')
            
-            for coords_list in coords_xy1992:
+            for coords_list in coords_xy2000:
                 x2000, y2000 = coords_list
                 line = f'{x2000:.3f}, {y2000:.3f}'
                 # line = ','.join([str(coord) for coord in coords_list])
