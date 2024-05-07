@@ -14,5 +14,5 @@ Wymagania:
 Instrukcja użycia programu:
 Program jest obsługiwany w Terminalu i działa za pomocą podawania konkretnych flag
 
-  python geo_v1.py
+    python geo_v1.py
   
