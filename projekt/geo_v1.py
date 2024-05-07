@@ -1,4 +1,4 @@
-from math import sin, cos, sqrt, tan, atan, atan2, degrees, radians, pi
+from math import sin, cos, sqrt, tan, atan, degrees, radians
 import sys
 import numpy as np
 
@@ -82,12 +82,18 @@ class Transformacje:
         Przelicza współrzędne geodezyje długość, szerokość oraz wysokość elipsoidalną (phi, lam, h)
         na współrzędne w układzie orto-kartezjańskim (X, Y, Z)
        ----------
-       phi, lam, h : FLOAT ??
+       phi, lam: FLOAT
+           współrzędne w układzie krzywoliniowym (długość i szerokość geograficzna)
+           [stopnie dziesiętne]
+       
+       h : FLOAT
+           [m]
     
        Returns
        -------
        X, Y, Z : FLOAT
-           współrzędne w układzie orto-kartezjańskim,
+           współrzędne w układzie orto-kartezjańskim
+           [m]
     
        '''
         phi = radians(phi)
@@ -100,19 +106,23 @@ class Transformacje:
     
     def xyz2neu (self, X, Y, Z, X0, Y0, Z0):
         '''
-        Przeliczenie wpółrzędnych w układzie orto-kartezjańskim
-        Na wpsółrzędne w układzie topocentrycznym w postaci wektora NEU
+        Przeliczenie wpółrzędnych w układzie orto-kartezjańskim na wpsółrzędne w 
+        układzie topocentrycznym w postaci wektora NEU. Do tych obliczń, oprócz współrzędnych w układzie 
+        kartezjańskim, użytownik podaje współrzędne geoentryczne anteny.
         ----------
         X, Y, Z : FLOAT
-             współrzędne w układzie orto-kartezjańskim, 
+             współrzędne w układzie orto-kartezjańskim
+             [m]
         
         X0, Y0, Z0 : FLOAT
             współrzędne geocentryczne anteny 
+            [m]
         
         Returns
         -------
         N, E, U :  FLOAT
             współrzedne w układzie topocentrycznym
+            [m]
     
         
         '''
@@ -143,19 +153,22 @@ class Transformacje:
     def pl22000(self, phi_, lam_):
         
         '''
-        Funkcja pozwalajaca na przeliczenie długości i szerokosci geodezyjnej (phi, lam) na 
-        współrzedne w układzie PL-2000(X, Y)
+        Funkcja pozwalajaca na przeliczenie współrzędnych geodezyjnych krzywoliniowuych: długości i 
+        szerokosci geodezyjnej (phi, lam) na współrzedne kartezjańskie w układzie PL-2000(X, Y)
         ----------
-        phi : FLOAT ??
-            współrzędne krzywoliniowe
+        phi : FLOAT 
+            współrzędna krzywoliniowa - szerokość geograficzna
+            [stopnie dziesiętne]
             
-        lam : FLOAT ??
-            współrzędne krzywoliniowe
+        lam : FLOAT 
+            współrzędna krzywoliniowa - długość geograficzna
+            [stopnie dziesiętne]
 
         Returns
         -------
         X, Y : FLOAT
             Współrzędne w układzie PL-2000
+            [m]
 
         '''
         phi = radians(phi_)
@@ -200,19 +213,23 @@ class Transformacje:
     def pl21992(self, phi_, lam_):
         '''
        
-       Funkcja pozwalajaca na przeliczenie długości i szerokosci geodezyjnej (phi, lam) na 
-       współrzedne w układzie PL-1992 (X, Y)
+       Funkcja pozwalajaca na przeliczenie dwspółrzędnych geodezyjnych krzywoliniowuych: długości i szerokosci (phi, lam) na 
+       współrzedne kartezjańskie w układzie PL-1992 (X, Y)
        
        ----------
-       phi : FLOAT ??
+       phi : FLOAT 
+           współrzędna krzywoliniowa - szerokość geograficzna
+           [stopnie dziesiętne]          
            
-       lam : FLOAT ??
-           
+       lam : FLOAT 
+            współrzędna krzywoliniowa - długość geograficzna
+            [stopnie dziesiętne]           
 
        Returns
        -------
        X, Y : FLOAT
            Współrzędne w układzie PL-1992
+           [m]
 
        '''
         phi = radians(phi_)
