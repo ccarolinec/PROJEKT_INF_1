@@ -12,6 +12,7 @@ Wymagania:
 - system operacyjny Windows 11
 
 Instrukcja użycia programu:
+Program jest obsługiwany w Terminalu i działa za pomocą podawania konkretnych flag
 
-
+  python geo_v1.py
   
