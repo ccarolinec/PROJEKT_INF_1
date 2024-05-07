@@ -1,4 +1,4 @@
-										TRANFORMACJE WSPÓŁRZĘDNYCH 
+________TRANFORMACJE WSPÓŁRZĘDNYCH________ 
 
 Projekt: Informatyka Geodezyjna II
 
