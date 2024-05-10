@@ -1,4 +1,4 @@
-________TRANFORMACJE WSPÓŁRZĘDNYCH________ 
+**________TRANFORMACJE WSPÓŁRZĘDNYCH________**
 
 Projekt: Informatyka Geodezyjna II
 
@@ -60,10 +60,11 @@ Ułamkowe części współrzędnych wpisujemy po kropce.
 
 6. Po kliknięciu ENTER i odświeżeniu danego folderu powinien pojawić się plik result.txt, gdzie w nazwie pliku jest uwzględniony rodzaj transformacji. Jeśli wynikiem są współrzędne wyrażone w metrach, program zaokrągli je do trzech miejsc po przecinku, czyli do milimetów.
 
-!!!
+**!!!**
 Istnieje także możliwość, aby program wykonał dwie transformacje na raz: xyz2plh i xyz2neu oraz pl21990 i pl2200. 
 
-    python geo_v1.py --headerline 4 -xyz2plh --xyz2neu 3664940.500 1409153.590 5009571.170
+    python geo_v1.py --headerline 4 --xyz2plh --xyz2neu 3664940.500 1409153.590 5009571.170
+
     python geo_v1.py --headerline 4 --pl21992 --pl22000 
 
-Istotna jest kolejność
+Istotna jest kolejność wpisywania transformacji, kiedy wpiszemy je na odwrót, program wykona tylko drugą w kolejności transformację. Wyniki podwójnej transformacji zapiszą się w jednym pliku .txt.
