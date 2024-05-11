@@ -22,6 +22,9 @@ class Transformacje:
         elif model == "grs80":
             self.a = 6378137.0
             self.b = 6356752.31414036
+        elif model == "Krasowskiego":
+            self.a = 6378245.0
+            self.b = 6356863.01877
         elif model == "mars":
             self.a = 3396900.0
             self.b = 3376097.80585952
@@ -41,7 +44,8 @@ class Transformacje:
         Parameters
         ----------
         X, Y, Z : FLOAT
-             współrzędne w układzie orto-kartezjańskim, 
+             współrzędne w układzie orto-kartezjańskim,
+             jednostka: metry
 
         Returns
         -------
@@ -78,16 +82,19 @@ class Transformacje:
             
     def plh2xyz(self, phi, lam, h):
         '''
-        Algorytm odrotny do algorytmu Hirvonena. 
-        Przelicza współrzędne geodezyje długość, szerokość oraz wysokość elipsoidalną (phi, lam, h)
+        Algorytm odwrotny do algorytmu Hirvonena. 
+        Przelicza współrzędne geodezyje: długość, szerokość oraz wysokość elipsoidalną (phi, lam, h)
         na współrzędne w układzie orto-kartezjańskim (X, Y, Z)
        ----------
-       phi, lam, h : FLOAT ??
-    
+       phi, lam, h : FLOAT 
+           długość, szerokość oraz wysokość elipsoidalna
+           jednostka: stopnie
+           
        Returns
        -------
        X, Y, Z : FLOAT
            współrzędne w układzie orto-kartezjańskim,
+           jednostka: metry
     
        '''
         phi = radians(phi)
@@ -100,19 +107,23 @@ class Transformacje:
     
     def xyz2neu (self, X, Y, Z, X0, Y0, Z0):
         '''
-        Przeliczenie wpółrzędnych w układzie orto-kartezjańskim
-        Na wpsółrzędne w układzie topocentrycznym w postaci wektora NEU
+        Przeliczenie wpółrzędnych w układzie orto-kartezjańskim (X, Y, Z)
+        na współrzędne topocentryczne satelitów (N, E, U)
+        przy użyciu współrzędnych geocentrycznych anteny (X0, Y0, Z0)
         ----------
         X, Y, Z : FLOAT
              współrzędne w układzie orto-kartezjańskim, 
+             jednostka: metry
         
         X0, Y0, Z0 : FLOAT
-            współrzędne geocentryczne anteny 
+            współrzędne geocentryczne anteny,
+            jednostka: metry
         
         Returns
         -------
         N, E, U :  FLOAT
-            współrzedne w układzie topocentrycznym
+            współrzedne w układzie topocentrycznym,
+            jednostka: metry
     
         
         '''
@@ -146,16 +157,19 @@ class Transformacje:
         Funkcja pozwalajaca na przeliczenie długości i szerokosci geodezyjnej (phi, lam) na 
         współrzedne w układzie PL-2000(X, Y)
         ----------
-        phi : FLOAT ??
-            współrzędne krzywoliniowe
+        phi : FLOAT 
+            szerokość geodezyjna, 
+            jednostka: stopnie
             
-        lam : FLOAT ??
-            współrzędne krzywoliniowe
+        lam : FLOAT 
+            długość geodezyjna, 
+            jednostka: stopnie
 
         Returns
         -------
         X, Y : FLOAT
-            Współrzędne w układzie PL-2000
+            Współrzędne w układzie PL-2000, 
+            jednostka: metry
 
         '''
         phi = radians(phi_)
@@ -204,15 +218,19 @@ class Transformacje:
        współrzedne w układzie PL-1992 (X, Y)
        
        ----------
-       phi : FLOAT ??
-           
-       lam : FLOAT ??
-           
+        phi : FLOAT 
+            szerokość geodezyjna, 
+            jednostka: stopnie
+            
+        lam : FLOAT 
+            długość geodezyjna, 
+            jednostka: stopnie
 
        Returns
        -------
        X, Y : FLOAT
-           Współrzędne w układzie PL-1992
+           Współrzędne w układzie PL-1992, 
+           jednostka: metry
 
        '''
         phi = radians(phi_)
