@@ -2,7 +2,7 @@
 
 Projekt: Informatyka Geodezyjna II
 
-Podany program służy do tranformacji współrzędnych między układami geocentrycznym XYZ, elipsoidalnym (phi, lambda h), topocentrycznym NEU oraz układami 1992 i 2000 na elipsoidach GRS80 i WGS84.
+Podany program służy do tranformacji współrzędnych między układami geocentrycznym XYZ, elipsoidalnym (phi, lambda h), topocentrycznym NEU oraz układami 1992 i 2000 na elipsoidach Krasowskiego, GRS80 i WGS84.
 
 Wymagania:
 - program python w wersji 3.11
