@@ -42,12 +42,15 @@ __Instrukcja użycia programu:__
 
       python geo_v1.py --headerline 4 --pl21992
 
-4. Nastepnie użytkownik jest proszony o podanie powierzchni odniesienia - do wyboru są WRS84 i GRS80. Program przyjmuje jedynie pisownię małymi literami.
+4. Nastepnie użytkownik jest proszony o podanie powierzchni odniesienia - do wyboru są elipsoida Krasowskiego, WRS84 i GRS80. Program przyjmuje jedynie pisownię małymi literami.
 
-        python geo_v1.py --headerline 4 --xyz2plh wrs84
-       python geo_v1.py --headerline 4 --xyz2plh grs80
+           python geo_v1.py --headerline 4 --xyz2plh wrs84
+   
+           python geo_v1.py --headerline 4 --xyz2plh grs80
 
-5. Na końcu uwzględniamy plik wejściowy o formacie .txt ze współrzędnymi. Plik ten powinien znajdować się na komputerze w folderze z plikiem geo_v1.py.
+           python geo_v1.py --headerline 4 --xyz2plh Krasowski 
+
+6. Na końcu uwzględniamy plik wejściowy o formacie .txt ze współrzędnymi. Plik ten powinien znajdować się na komputerze w folderze z plikiem geo_v1.py.
    
          python geo_v1.py --headerline 4 --xyz2plh grs80 wsp_inp.txt
    
