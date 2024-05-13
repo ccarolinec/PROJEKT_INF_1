@@ -19,41 +19,41 @@ __Instrukcja użycia programu:__
   
 2. Następnie należy uwzględnić liczbę linijek nagłówka flagą --header_line w pliku wejściowym ze współrzędnymi tak, aby progam zaczął sczytywanie od danej linijki. Podajemy liczbę wersów, które zajmuje nagłówek:
 
-        python geo_v1.py --headerline 4
+        python geo_v1.py --header_lines 4
 
 3. Potem uzytkownik podaje flagę funkcji obliczeniowej, którą zamierzamy wykonać:
 
 - transformacja ze współrzędnych X,Y,Z do współrzędnych phi, lambda, wysokość:
 
-      python geo_v1.py --headerline 4 --xyz2plh
+      python geo_v1.py --header_lines 4 --xyz2plh
 
 - transformacja ze współrzędnych phi, lambda, wysokość do wspołrzędnych X,Y,Z:
 
-        python geo_v1.py --headerline 4 --plh2xyz
+        python geo_v1.py --header_lines 4 --plh2xyz
 
 - transformacja ze współrzędnych X,Y,Z do układu N,E,U (w tym przypadku należy także podać współrzędne geocentryczne anteny)
 
-      python geo_v1.py --headerline 4 --xyz2neu 3664940.500 1409153.590 5009571.170
+      python geo_v1.py --header_lines 4 --xyz2neu 3664940.500 1409153.590 5009571.170
 
 - transformacja ze współrzędnych phi, lamda do układu 2000
 
-        python geo_v1.py --headerline 4 --pl22000
+        python geo_v1.py --header_lines 4 --pl22000
 
 - transformacja ze współrzędnych phi, lambda do układu 1992
 
-      python geo_v1.py --headerline 4 --pl21992
+      python geo_v1.py --header_lines 4 --pl21992
 
 4. Nastepnie użytkownik jest proszony o podanie powierzchni odniesienia - do wyboru są elipsoida Krasowskiego, WRS84 i GRS80. Program przyjmuje jedynie pisownię małymi literami.
 
-           python geo_v1.py --headerline 4 --xyz2plh wrs84
+           python geo_v1.py --header_lines 4 --xyz2plh wrs84
 
-           python geo_v1.py --headerline 4 --xyz2plh grs80
+           python geo_v1.py --header_lines 4 --xyz2plh grs80
    
-           python geo_v1.py --headerline 4 --xyz2plh Krasowski 
+           python geo_v1.py --header_lines 4 --xyz2plh Krasowski 
 
 6. Na końcu uwzględniamy plik wejściowy o formacie .txt ze współrzędnymi. Plik ten powinien znajdować się na komputerze w folderze z plikiem geo_v1.py.
    
-         python geo_v1.py --headerline 4 --xyz2plh grs80 wsp_inp.txt
+         python geo_v1.py --header_lines 4 --xyz2plh grs80 wsp_inp.txt
    
 Format pliku: 
    W przypadku transformacji xyz2plh i xyz2neu, w w pierwszej kolumnie ma znajdować się współrzędna X, w drugiej Y, w trzeciej Z wyrażone w metrach. 
@@ -67,8 +67,8 @@ Ułamkowe części współrzędnych wpisujemy po kropce.
 **!!!**
 Istnieje także możliwość, aby program wykonał dwie transformacje na raz: xyz2plh i xyz2neu oraz pl21990 i pl2200. 
 
-    python geo_v1.py --headerline 4 --xyz2plh --xyz2neu 3664940.500 1409153.590 5009571.170
+    python geo_v1.py --header_lines 4 --xyz2plh --xyz2neu 3664940.500 1409153.590 5009571.170
 
-    python geo_v1.py --headerline 4 --pl21992 --pl22000 
+    python geo_v1.py --header_lines 4 --pl21992 --pl22000 
 
 Istotna jest kolejność wpisywania transformacji, kiedy wpiszemy je na odwrót, program wykona tylko drugą w kolejności transformację. Wyniki podwójnej transformacji zapiszą się w jednym pliku .txt.
