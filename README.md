@@ -6,6 +6,7 @@ Podany program służy do tranformacji współrzędnych między układami geocen
 
 Wymagania:
 - program python w wersji 3.11
+- biblioteka math
 - biblioteka numpy 
 - biblioteka sys
 - system operacyjny Windows 11
