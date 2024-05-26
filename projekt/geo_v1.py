@@ -22,9 +22,6 @@ class Transformacje:
         elif model == "grs80":
             self.a = 6378137.0
             self.b = 6356752.31414036
-        elif model == "Krasowskiego":
-            self.a = 6378245.0
-            self.b = 6356863.01877
         elif model == "mars":
             self.a = 3396900.0
             self.b = 3376097.80585952
